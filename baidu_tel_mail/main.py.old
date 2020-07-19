@@ -1,0 +1,144 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2019-12-28 19:37:59
+# @Author  : yuan
+# @Version : 1.0.0
+# @describe: version 2 主爬取模块
+import os,time
+import string
+import requests
+from urllib.parse import quote
+
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from config import max_page, parse_result, singleton_timeout,debug_mode,headers
+from detail import Crawer
+import csv
+from selenium.common.exceptions import NoSuchElementException
+import socket
+
+#设置所有单利演示
+socket.setdefaulttimeout(singleton_timeout)
+
+
+
+#或者加密的url真实的链接
+def get_url(url_path):
+    if 'http' not in url_path:
+        return None
+    try :
+        r = requests.get(url_path, allow_redirects=True,headers = headers,timeout=singleton_timeout)
+        
+        if r.status_code ==200:
+            return r.url
+    except TimeoutError:
+        print("打开",url_path,"超时")
+    except Exception as err:
+        print("打开",url_path,err)
+    return None
+    
+#多线程模块
+def thread_detail(title,real_url,prefix_fileName):
+    detail_info =  Crawer(real_url,prefix_fileName).start()
+    one_iitem = [title,real_url,prefix_fileName,detail_info[0],detail_info[1]]
+    print(one_iitem)
+    fw_csv.writerow(one_iitem)
+    return one_iitem
+
+def process_signale_page(line_list,keyword,page_index):
+    for index,line in enumerate(line_list):
+        
+        t = line.find_element_by_xpath("a")
+        real_url = get_url(t.get_attribute('href'))#reallink
+        prefix_fileName = '{}_{}_{}'.format(keyword,page_index,index)
+        # thread_detail(t.text,real_url,prefix_fileName)
+        if debug_mode:
+            print(t.text,real_url)
+        if real_url:#real_url不为空才继续
+            task = executor.submit(thread_detail,t.text,real_url,prefix_fileName)
+        tasks.append(task)
+
+def baidu_search(keyword,max_page):
+    driver = webdriver.Chrome()#chrome_options=chrome_options
+    driver.maximize_window()
+    driver.get('http://www.baidu.com')
+    #通过ID找网页的标签，找到搜索框的标签          
+    seek_input =   driver.find_element_by_id("kw")     
+    #设置搜索的内容          
+    seek_input.send_keys(keyword)    
+    #找到搜索文档按钮          
+    seek_but = driver.find_element_by_id("su")     
+    #并点击搜索 按钮          
+    seek_but.click()    
+    #并点击搜索 按钮          
+    js = 'document.documentElement.scrollTop=10000'#拖动滚动条到底部
+    time.sleep(1)
+    driver.execute_script(js)
+    time.sleep(1)
+    driver.find_elements_by_xpath("//h3[@class='t']")
+    #'''xpath提取特征'''
+    total = 0     #页面数
+    
+    #发送第一页
+    # executor.submit(bd_search, driver.current_url,keyword,0)
+    process_signale_page(driver.find_elements_by_xpath("//h3[@class='t']"),keyword,total)
+    has_next = True
+    #往后翻页
+    while total<max_page and has_next:
+        try:
+            total=total+1
+            
+            if total == 1 :
+                result = driver.find_element_by_xpath("//a[@class='n']")
+            else :
+                #result = driver.find_element_by_xpath("//a[@class='n']")
+                result = driver.find_element_by_link_text("下一页>")    
+                
+            result.click()    
+            time.sleep(2)   
+            process_signale_page(driver.find_elements_by_xpath("//h3[@class='t']"),keyword,total)
+            driver.execute_script(js)#滑动到底部。供下次查找
+
+        except NoSuchElementException as err:
+            has_next=False
+            print("到达最大页数")
+        except Exception as err:
+            has_next = False
+            print(err,"提起结束")
+            
+ 
+    driver.quit()  
+
+
+if __name__ == '__main__':
+    # 线程池
+    executor = ThreadPoolExecutor(max_workers=64)
+    tasks = []
+    #打开csv
+    f_w  = open('%s.csv'%''.join(parse_result),'a',encoding='utf-8') 
+    fw_csv = csv.writer(f_w)
+    fw_csv.writerow(['title','url','pageCachePrefixName','QQ','Email'])
+
+    # 启动参数
+    chrome_options = Options()
+    prefs = {
+        'profile.default_content_setting_values': {
+            'images': 2,  # 禁用图片的加载
+            # 'javascript': 2  # 禁用js，可能会导致通过js加载的互动数抓取失效
+        }
+    }
+    chrome_options.add_experimental_option("prefs", prefs)
+    chrome_options.add_argument('--headless')  # 使用无头谷歌浏览器模式
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument("window-size=1024,768")
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('blink-settings=imagesEnabled=false')
+    # getReallink(parse_result[0],max_page)
+    
+
+    executor.shutdown(wait=True)#等待所有线程完成并销毁资源
+    f_w.close()
+
+    print('结束\n')
