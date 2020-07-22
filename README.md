@@ -45,3 +45,6 @@
 1.zhihu.py　修改第197行，填写需要爬取的话题链接<br>
 2.dbProcess.py　参考22-34插入字段，新建三张表，之后修改10-17行数据库信息．<br>
 3.运行　python zhihu.com<br>
+
+### 6.ICCV2018
+简介:对应上面的iccv2017muti，简单修改即可爬取ICCV2018．<br>
