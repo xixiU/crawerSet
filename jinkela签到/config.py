@@ -19,6 +19,6 @@ debug_mode = True
 # time out for single page
 singleton_timeout = 5
  #支持多线程调用，填上多人的信息即可
-id_password_set=[("verjue@163.com","5nEj7.vds53VtXB")]
+id_password_set=[("account","passwd")]
 
 
