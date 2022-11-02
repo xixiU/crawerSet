@@ -17,7 +17,8 @@ bd_headers = {
 
 }
 
-debug_mode = False #　debug模式会显示Ui,正常运行可以不启动ｕi，在非windowsX环境配置定时脚本　，可以自动填
+
+debug_mode = True #　debug模式会显示Ui,正常运行可以不启动ｕi，在非windowsX环境配置定时脚本　，可以自动填
 singleton_timeout = 5# time out for single page
 id_password_set=[("yourid","password")] #支持多线程调用，填上多人的信息即可
 
