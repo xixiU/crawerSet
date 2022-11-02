@@ -28,11 +28,9 @@ def start(name_id,password):
         driver = webdriver.Chrome()
     else:
         driver = webdriver.Chrome(chrome_options=chrome_options)
-
-    #晨午检
-    # driver.maximize_window()
+    
     driver.get(main_site)
-    driver.maximize_window()
+    # driver.maximize_window()
 
     seek_name = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@id='email']")))
     # seek_name = driver.find_element_by_xpath("//input[@placeholder='账号']")
@@ -52,8 +50,10 @@ def start(name_id,password):
     seek_btn = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@id='checkin']")))
 
     seek_btn.click()  
- 
+    
+     
     time.sleep(singleton_timeout)
+    driver.quit()
             
  
 
