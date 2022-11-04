@@ -24,38 +24,40 @@ socket.setdefaulttimeout(singleton_timeout)
 
 
 def start(name_id,password):
-    if(debug_mode):
-        driver = webdriver.Chrome()
-    else:
-        driver = webdriver.Chrome(chrome_options=chrome_options)
+    try:
+        if(debug_mode):
+            driver = webdriver.Chrome()
+        else:
+            driver = webdriver.Chrome(options=chrome_options)
+        driver.implicitly_wait(singleton_timeout)
+        driver.get(main_site)
+        driver.maximize_window()
+
+        seek_name = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@id='email']")))
+        # seek_name = driver.find_element_by_xpath("//input[@placeholder='账号']")
+        seek_name.send_keys(name_id)    
+
+        seek_mima = driver.find_element_by_xpath("//input[@id='passwd']")
+        seek_mima.send_keys(password)
+        #通过ID找网页的标签，找到搜索框的标签          
+        # seek_input =   driver.find_element_by_id("kw")     
+        #设置搜索的内容          
+        #找到搜索文档按钮          
+        seek_but = driver.find_element_by_xpath("//button[@id='login']")     
+        #并点击搜索 按钮          
+        seek_but.click()  
     
-    driver.get(main_site)
-    # driver.maximize_window()
+        # 找到签到按钮
+        seek_btn = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@id='checkin']")))
 
-    seek_name = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@id='email']")))
-    # seek_name = driver.find_element_by_xpath("//input[@placeholder='账号']")
-    seek_name.send_keys(name_id)    
+        seek_btn.click()  
+    except Exception as err:
+        print(err)
+    finally:
+        driver.quit()
 
-    seek_mima = driver.find_element_by_xpath("//input[@id='passwd']")
-    seek_mima.send_keys(password)
-    #通过ID找网页的标签，找到搜索框的标签          
-    # seek_input =   driver.find_element_by_id("kw")     
-    #设置搜索的内容          
-    #找到搜索文档按钮          
-    seek_but = driver.find_element_by_xpath("//button[@id='login']")     
-    #并点击搜索 按钮          
-    seek_but.click()  
-   
-    # 找到签到按钮
-    seek_btn = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@id='checkin']")))
-
-    seek_btn.click()  
-    
-     
-    time.sleep(singleton_timeout)
-    driver.quit()
             
- 
+
 
 if __name__ == '__main__':
     # 线程池
