@@ -4,7 +4,8 @@
 
 ## 使用
 
-1.在config.py设置自己的账号密码
+0. 在[http://npm.taobao.org/mirrors/chromedriver/](http://npm.taobao.org/mirrors/chromedriver/)下载对应的chrome版本镜像
+1.在config.py设置自己的账号密码；
 2.
 ```python
 python3 main.py
