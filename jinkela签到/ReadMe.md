@@ -4,7 +4,7 @@
 
 ## 使用
 
-0. 在[http://npm.taobao.org/mirrors/chromedriver/](http://npm.taobao.org/mirrors/chromedriver/)下载对应的chrome版本镜像
+0. 在[http://npm.taobao.org/mirrors/chromedriver/](http://npm.taobao.org/mirrors/chromedriver/)下载对应的chrome版本镜像,并放在/usr/bin/或其他系统目录
 
 1.在config.py设置自己的账号密码；
 
