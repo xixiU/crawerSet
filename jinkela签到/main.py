@@ -46,7 +46,7 @@ def start(name_id,password):
         seek_but = driver.find_element(By.XPATH,"//button[@id='login']")     
         #并点击搜索 按钮          
         seek_but.click()  
-    
+
         # 找到签到按钮
         seek_btn = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@id='checkin']")))
         seek_btn.click()
@@ -73,7 +73,7 @@ if __name__ == '__main__':
         }
     }
     chrome_options.add_experimental_option("prefs", prefs)
-    # chrome_options.add_argument('--headless')  # 使用无头谷歌浏览器模式
+    chrome_options.add_argument('--headless')  # 使用无头谷歌浏览器模式
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument("window-size=1024,768")

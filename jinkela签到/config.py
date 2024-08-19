@@ -14,7 +14,7 @@
 main_site = 'https://jinkela202309.lol/user'
 
 #　debug模式会显示Ui,正常运行可以不启动ｕi，在非windowsX环境配置定时脚本　，可以自动填
-debug_mode = True 
+debug_mode = False 
 # 多线程调用每个现成延时
 # time out for single page
 singleton_timeout = 5
@@ -22,6 +22,6 @@ singleton_timeout = 5
 proxy = 'socks5://127.0.0.1:7890'
 
  #支持多线程调用，填上多人的信息即可
-id_password_set=[("account","passwd")]
+id_password_set=[("verjue@163.com","5nEj7.vds53VtXBQQ")]
 
 
