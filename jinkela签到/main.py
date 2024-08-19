@@ -49,8 +49,8 @@ def start(name_id,password):
     
         # 找到签到按钮
         seek_btn = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//button[@id='checkin']")))
-
-        seek_btn.click()  
+        seek_btn.click()
+        print('checkin successful')
     except Exception as err:
         print(err)
     finally:
