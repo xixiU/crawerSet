@@ -1,6 +1,13 @@
 # crawerSet
 本人未曾利用任何爬虫进行非法行为，因此用户对本程序的使用负责．
 
+## chromeDriver安装
+
+https://googlechromelabs.github.io/chrome-for-testing/
+```
+unzip chromedriver-mac-arm64.zip
+sudo mv chromedriver-mac-arm64/chromedriver /usr/local/bin/
+```
 ## 若提示xx package not found google安装即可
 
 ## 逐步脱敏并开源以前自己写的部分爬虫

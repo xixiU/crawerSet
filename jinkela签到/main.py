@@ -22,13 +22,13 @@ import socket
 #设置所有单例延时
 socket.setdefaulttimeout(singleton_timeout)
 
-
+executable_path = '/usr/local/bin/chromedriver'
 def start(name_id,password):
     try:
         if(debug_mode):
-            driver = webdriver.Chrome()
+            driver = webdriver.Chrome(executable_path = executable_path)
         else:
-            driver = webdriver.Chrome(options=chrome_options)
+            driver = webdriver.Chrome(executable_path = executable_path,options=chrome_options)
         driver.implicitly_wait(singleton_timeout)
         driver.get(main_site)
         driver.maximize_window()
