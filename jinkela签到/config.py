@@ -21,7 +21,7 @@ singleton_timeout = 5
 
 proxy = 'socks5://127.0.0.1:7890'
 
- #支持多线程调用，填上多人的信息即可
-id_password_set=[("verjue@163.com","5nEj7.vds53VtXBQQ")]
+#支持多线程调用，填上多人的信息即可
+id_password_set=[("account","passwd")]
 
 
