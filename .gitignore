@@ -1,10 +1,11 @@
 .idea*
+*.bak
 
 .DS_Store
 
 **/.DS_Store
-
-
+*.png
+*.jpg
 **/__pycache__
 jinkela签到/config.py
 
