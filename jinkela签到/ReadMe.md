@@ -18,8 +18,16 @@ python3 main.py
 建议测试时将config.py中的debug_mode设置为Tue,测通后设置为False
 
 ## 类Unix使用crontab配置定时任务
+通过crontab 配置自动运行。
 
-1.crontab -e
-2.* * */1 * * path_of_your_python path_of_file/main.py
+编辑当前用户的 crontab
+```cmd
+crontab -e
+```
+
+添加如下内容
+```cmd
+* * */1 * * path_of_your_python path_of_file/main.py
+```
 
 配置每天运行
