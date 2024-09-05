@@ -78,7 +78,6 @@ def getScore(param : BaseBody):
         "cardNo":os.getenv("MY_CARD_NO"),
         "certificateNo": os.getenv("OSTA_CERTIFICATE_NO")
     }
-    print(params)
     response = requests.get(url, headers=COMMON_HEADERS, params=params)
     # print(curlify.to_curl(response.request))
     print(response.text)
