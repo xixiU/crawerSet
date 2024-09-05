@@ -20,5 +20,5 @@ export OSTA_CERTIFICATE_NO = ""
 
 3.配置自动查询<br>
 ```
-0 10 * * * /usr/bin/python3 /Users/yuanrongjie/software/python_project/crawerSet/osta/osta.py
+0 10 * * * /usr/bin/python3 /path_of_file/osta/osta.py
 ```
