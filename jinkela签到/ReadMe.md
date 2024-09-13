@@ -5,7 +5,7 @@
 ## 使用
 
 0. 下载chromedrive驱动
-在[http://npm.taobao.org/mirrors/chromedriver/](http://npm.taobao.org/mirrors/chromedriver/)下载对应的chrome版本镜像,并放在/usr/bin/或其他系统目录
+在[https://googlechromelabs.github.io/chrome-for-testing/#stable](https://googlechromelabs.github.io/chrome-for-testing/#stable)下载对应的chrome版本镜像,并放在/usr/bin/（linux）或其他系统目录
 
 1. 设置账号密码
 在config.py设置自己的账号密码；

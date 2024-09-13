@@ -81,10 +81,13 @@ def getScore(param : BaseBody):
     response = requests.get(url, headers=COMMON_HEADERS, params=params)
     # print(curlify.to_curl(response.request))
     print(response.text)
+    return response.json()
+ 
 
-import base64
-
-
+def getScoreOnce():
+    data = getScore(getBaseUnic())
+    if data["code"]!=200:
+        return getScoreOnce()
+    print(data)
 if __name__ == "__main__":
-    getScore(getBaseUnic())
-
+    getScoreOnce()
