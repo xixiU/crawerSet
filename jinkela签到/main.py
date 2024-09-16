@@ -15,6 +15,8 @@ from selenium.webdriver.common.by import By
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+
 from config import  singleton_timeout,debug_mode,main_site,id_password_set,proxy
 
 import socket
@@ -23,12 +25,13 @@ import socket
 socket.setdefaulttimeout(singleton_timeout)
 
 executable_path = '/usr/local/bin/chromedriver'
+service = Service(executable_path)
 def start(name_id,password):
     try:
         if(debug_mode):
-            driver = webdriver.Chrome(executable_path = executable_path)
+            driver = webdriver.Chrome(service = service)
         else:
-            driver = webdriver.Chrome(executable_path = executable_path,options=chrome_options)
+            driver = webdriver.Chrome(service = service,options=chrome_options)
         driver.implicitly_wait(singleton_timeout)
         driver.get(main_site)
         driver.maximize_window()
@@ -73,7 +76,7 @@ if __name__ == '__main__':
         }
     }
     chrome_options.add_experimental_option("prefs", prefs)
-    chrome_options.add_argument('--headless')  # 使用无头谷歌浏览器模式
+    # chrome_options.add_argument('--headless')  # 使用无头谷歌浏览器模式
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument("window-size=1024,768")
