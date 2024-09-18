@@ -76,7 +76,6 @@ if __name__ == '__main__':
         }
     }
     chrome_options.add_experimental_option("prefs", prefs)
-    # chrome_options.add_argument('--headless')  # 使用无头谷歌浏览器模式
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument("window-size=1024,768")
@@ -84,6 +83,8 @@ if __name__ == '__main__':
     chrome_options.add_argument('blink-settings=imagesEnabled=false')
     if len(proxy)>0:
         chrome_options.add_argument(f'--proxy-server={proxy}')
+    if not debug_mode:
+        chrome_options.add_argument('--headless')  # 使用无头谷歌浏览器模式
 
     for id_pd in id_password_set:
         start(id_pd[0],id_pd[1])

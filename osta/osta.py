@@ -57,9 +57,8 @@ def from_dict(data_class, data_dict):
 def getBaseUnic() -> BaseBody:
     url = 'http://jndj.osta.org.cn/api/certificate/get/verification/base'
 
-
     response = requests.get(url, headers=COMMON_HEADERS, verify=False)
-    assert response.status_code == 200  ,"base信息获取失败"
+    assert response.status_code == 200  ,"base信息获取失败"+response.text
     repsone_text = response.text
         # 解析 JSON 字符串为字典
     parsed_dict = json.loads(repsone_text)
