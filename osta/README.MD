@@ -7,15 +7,12 @@ python3 -m pip install opencv-python
 
 2.配置姓名、身份证号<br>
 ```cmd
-# 三个参数任意配置2个
+# 配置姓名与身份证号
 # 姓名
 export MY_NAME=""
 
 # 身份证号
 export MY_CARD_NO=""
-
-# 证书编号
-export OSTA_CERTIFICATE_NO = ""
 ```
 
 3.配置自动查询<br>
