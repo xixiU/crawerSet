@@ -73,9 +73,9 @@ def getScore(param : BaseBody):
     params = {
         "code": param.uniqueId,
         "num": str(detect_horizontal_movement(param.originalImage,param.slidingImage)),
-        "name": os.getenv("MY_NAME"),
-        "cardNo":os.getenv("MY_CARD_NO"),
-        "certificateNo":  ''
+        "name": os.getenv("MY_NAME") or '',
+        "cardNo":os.getenv("MY_CARD_NO") or '',
+        "certificateNo":  os.getenv("OSTA_CERTIFICATE_NO") or ''
     }
     response = requests.get(url, headers=COMMON_HEADERS, params=params)
     # print(curlify.to_curl(response.request))
