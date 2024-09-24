@@ -27,6 +27,7 @@ socket.setdefaulttimeout(singleton_timeout)
 executable_path = '/usr/local/bin/chromedriver'
 service = Service(executable_path)
 def start(name_id,password):
+    print("chrome_options:%s"%chrome_options._arguments)
     try:
         if(debug_mode):
             driver = webdriver.Chrome(service = service)
