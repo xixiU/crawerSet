@@ -17,6 +17,7 @@ from azure.core.credentials import AzureKeyCredential
 #     api_key=os.environ["GITHUB_TOKEN"],
 # )
 
+os.environ["OPENAI_API_KEY"] = os.environ["GITHUB_TOKEN"]
 model_name = "deepseek-chat"
 client = OpenAI(
     base_url="https://api.deepseek.com",
