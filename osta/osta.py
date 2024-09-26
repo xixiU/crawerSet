@@ -78,7 +78,7 @@ def getScore(param : BaseBody):
         "certificateNo":  os.getenv("OSTA_CERTIFICATE_NO") or ''
     }
     response = requests.get(url, headers=COMMON_HEADERS, params=params)
-    # print(curlify.to_curl(response.request))
+    # print(curlify.to_curl(response.request))    
     return response.json()
  
 
@@ -86,6 +86,11 @@ def getScoreOnce():
     data = getScore(getBaseUnic())
     if data["code"]!=200:
         return getScoreOnce()
-    print(data)
+    score = data['body']
+    if not score:
+        return
+    print(score)
+
+    
 if __name__ == "__main__":
     getScoreOnce()
