@@ -68,29 +68,31 @@ def getBaseUnic() -> BaseBody:
 
     return api_response.body
 
-def getScore(param : BaseBody):
+
+def getScore(param : BaseBody,name: str,cardNo:str,certificateNo:str):
     url = "http://jndj.osta.org.cn/api/certificate/query/list/jn"
     params = {
         "code": param.uniqueId,
         "num": str(detect_horizontal_movement(param.originalImage,param.slidingImage)),
-        "name": os.getenv("MY_NAME") or '',
-        "cardNo":os.getenv("MY_CARD_NO") or '',
-        "certificateNo":  os.getenv("OSTA_CERTIFICATE_NO") or ''
+        "name": name,
+        "cardNo":cardNo,
+        "certificateNo":  certificateNo
     }
     response = requests.get(url, headers=COMMON_HEADERS, params=params)
     # print(curlify.to_curl(response.request))    
     return response.json()
  
 
-def getScoreOnce():
-    data = getScore(getBaseUnic())
+def getScoreOnce(name,cardNo,certificateNo):
+    data = getScore(getBaseUnic(),name,cardNo,certificateNo)
     if data["code"]!=200:
         return getScoreOnce()
     score = data['body']
     if not score:
         return
-    print(score)
+    return score[0]
 
     
 if __name__ == "__main__":
-    getScoreOnce()
+    score = getScoreOnce(os.getenv("MY_NAME") or '',os.getenv("MY_CARD_NO") or '',os.getenv("OSTA_CERTIFICATE_NO") or '')
+    print(score)

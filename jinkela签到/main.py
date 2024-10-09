@@ -14,6 +14,7 @@ from selenium.webdriver.common.by import By
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from selenium import webdriver
+import undetected_chromedriver as uc
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
@@ -26,13 +27,17 @@ socket.setdefaulttimeout(singleton_timeout)
 
 executable_path = '/usr/local/bin/chromedriver'
 service = Service(executable_path)
-def start(name_id,password):
-    print("chrome_options:%s"%chrome_options._arguments)
+def start(name_id:str,password:str):
+    # print("chrome_options:%s"%chrome_options._arguments)
     try:
-        if(debug_mode):
-            driver = webdriver.Chrome(service = service)
-        else:
-            driver = webdriver.Chrome(service = service,options=chrome_options)
+        options = uc.ChromeOptions()
+
+        # 设置代理
+        options.add_argument(f"--proxy-server={proxy}")
+        print("chrome_options:%s"%options._arguments)
+
+        driver = uc.Chrome(driver_executable_path= executable_path,options=options)
+        driver = webdriver.Chrome(service = service,options=chrome_options)
         driver.implicitly_wait(singleton_timeout)
         driver.get(main_site)
         driver.maximize_window()
@@ -58,10 +63,19 @@ def start(name_id,password):
     except Exception as err:
         print(err)
     finally:
-        driver.quit()
+        # driver.quit()
+        pass
 
-            
-
+def try_bypass_cloudfare(driver):
+    try:
+        # 等待确认元素出现
+        checkbox = WebDriverWait(driver, 30).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "div.cb-c input[type='checkbox']"))
+        )
+        # 点击复选框
+        checkbox.click()
+    except Exception as err:
+        print(err) 
 
 if __name__ == '__main__':
     # 线程池
