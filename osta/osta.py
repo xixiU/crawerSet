@@ -86,7 +86,7 @@ def getScore(param : BaseBody,name: str,cardNo:str,certificateNo:str):
 def getScoreOnce(name,cardNo,certificateNo):
     data = getScore(getBaseUnic(),name,cardNo,certificateNo)
     if data["code"]!=200:
-        return getScoreOnce()
+        return getScoreOnce(name,cardNo,certificateNo)
     score = data['body']
     if not score:
         return
