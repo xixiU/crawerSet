@@ -43,9 +43,9 @@ def start(name_id:str,password:str):
         # driver.maximize_window()
 
         driver.execute_script(f"window.open('{main_site}', '_blank')")
-        time.sleep(10)
+        time.sleep(7)
         driver.switch_to.window(driver.window_handles[1])
-        seek_name = WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.XPATH, "//input[@id='email']")))
+        seek_name = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@id='email']")))
         # seek_name = driver.find_element_by_xpath("//input[@placeholder='账号']")
         seek_name.send_keys(name_id)    
 
