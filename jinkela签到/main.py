@@ -39,14 +39,15 @@ def start(name_id:str,password:str):
         # driver = webdriver.Chrome(service = service,options=chrome_options)
 
         driver.implicitly_wait(singleton_timeout)
+        
         driver.get(main_site)
         # driver.maximize_window()
-
         driver.execute_script(f"window.open('{main_site}', '_blank')")
-        time.sleep(7)
+        time.sleep(10)
         driver.switch_to.window(driver.window_handles[1])
+        driver.refresh()
         seek_name = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@id='email']")))
-        # seek_name = driver.find_element_by_xpath("//input[@placeholder='账号']")
+        # seek_name = driver.find_element(By.ID,"email")
         seek_name.send_keys(name_id)    
 
         seek_mima = driver.find_element(By.XPATH,"//input[@id='passwd']")
@@ -65,6 +66,7 @@ def start(name_id:str,password:str):
         print('checkin successful')
     except Exception as err:
         print(err)
+
     finally:
         # driver.quit()
         pass
