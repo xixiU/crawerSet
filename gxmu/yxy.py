@@ -9,35 +9,12 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-import os
-import pandas as pd
-import openpyxl
+from common import save_to_excel,get_page_soup,headers
 
-def save_to_excel(name:str, email: str):
-    # **追加数据到 Excel**
-    file_path = "data.xlsx"  # Excel 文件名
-
-    # 检查 Excel 是否存在
-    if not os.path.exists(file_path):
-        # 如果文件不存在，创建一个新的 Excel 并写入表头
-        df = pd.DataFrame(columns=["姓名", "邮箱"])
-        df.to_excel(file_path, index=False, engine='openpyxl')
-
-    # 读取 Excel 并追加数据
-    df = pd.read_excel(file_path, engine='openpyxl')
-    new_data = pd.DataFrame([[name, email]], columns=["姓名", "邮箱"])
-    df = pd.concat([df, new_data], ignore_index=True)
-
-    # 保存回 Excel
-    df.to_excel(file_path, index=False, engine='openpyxl')
+department = '医学院'
 url = 'https://yxy.gxmu.edu.cn/rcpy_2647/szdw/yxy_xzzcdw/'
-headers = {
-    'User-Agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.487.0 Safari/537.36 Edg/100.0.1185.39'
-}
-response = requests.get(url, headers=headers)
-response.encoding = response.apparent_encoding
-soup = BeautifulSoup(response.text, 'lxml')
+
+soup = get_page_soup(url)
 teachers = soup.find('div', class_='list-all').find_all('a')
 for teacher in teachers:
     teacher_name = teacher.string.strip()
@@ -57,7 +34,7 @@ for teacher in teachers:
     if email == '':
         continue
     # 将结果追加写入到excel中
-    with open('teacher.txt','a',encoding='utf-8') as f:
-        f.write("姓名：{},邮箱：{}\n".format(teacher_name,email))
-    save_to_excel(teacher_name, email)
+    # with open('teacher.txt','a',encoding='utf-8') as f:
+    #     f.write("姓名：{},邮箱：{}\n".format(teacher_name,email))
+    save_to_excel(department,teacher_name, email)
     print("姓名：{},邮箱：{}".format(teacher_name,email))

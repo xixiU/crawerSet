@@ -157,4 +157,4 @@ export OSTA_CERTIFICATE_NO = ""
 
 ### gxmu
 
-广西医科大学教务系统成绩爬取
+广西医科大学教务系统教师邮箱爬取爬取
