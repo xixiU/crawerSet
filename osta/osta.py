@@ -94,5 +94,6 @@ def getScoreOnce(name,cardNo,certificateNo):
 
     
 if __name__ == "__main__":
-    score = getScoreOnce(os.getenv("MY_NAME") or '',os.getenv("MY_CARD_NO") or '',os.getenv("OSTA_CERTIFICATE_NO") or '')
+    score = getScoreOnce("刘晓娜","450923198909141766","")
+    # score = getScoreOnce(os.getenv("MY_NAME") or '',os.getenv("MY_CARD_NO") or '',os.getenv("OSTA_CERTIFICATE_NO") or '')
     print(score)
