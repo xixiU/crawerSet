@@ -11,3 +11,5 @@ jinkela签到/config.py
 
 *.xls
 *.xlsx
+*.bin
+*.sqlite3
